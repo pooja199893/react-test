@@ -1,53 +1,68 @@
-import React, { useState, useEffect } from 'react';
-import '../App.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Card from "./Card";
+import "../App.css"
 
 function SearchApp() {
-  const [products, setProducts] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [filterProducts, setFilterProducts] = useState([]);
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-     fetch('https://fakestoreapi.com/products?sort=desc')
-      // fetch('https://fakestoreapi.com/products')
-      .then(response => response.json())
-      .then(data => setProducts(data))
-      .catch(error => console.log('Error fetching products:', error));
-  }, []);
-
-  useEffect(() => {
-    const filteredProducts = products.filter(product =>
-      product.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setSearchResults(filteredProducts);
-  }, [searchTerm, products]);
-
-  const handleSearch = event => {
-    setSearchTerm(event.target.value);
+  const getProducts = async function () {
+    try {
+      setLoading(true);
+      const response = await axios.get("https://fakestoreapi.com/products");
+      if (response?.data.length) {
+        setAllProducts(response.data);
+        setFilterProducts(response.data);
+      }
+      console.log(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
 
+  const handleChange = function (e) {
+    setSearch(e.target.value);
+
+    let userInput = e.target.value.toLowerCase();
+
+    const filtered = allProducts.filter((product) =>
+      product.title.toLowerCase().includes(userInput)
+    );
+    setFilterProducts(filtered);
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
   return (
     <div className="search-app">
       <h1>Products Search</h1>
       <input
         type="text"
         placeholder="Search for products..."
-        value={searchTerm}
-        onChange={handleSearch}
+        value={search}
+        onChange={handleChange}
       />
       <div className="product-list">
-        {searchResults.length > 0 ? (
-          searchResults.map(product => (
-            <div key={product.id} className="product">
-              <img src={product.image} alt={product.title} />
-              <p>{product.title}</p>
-              <p>${product.price}</p>
-            </div>
-          ))
-        ) : (
+           {filterProducts.map(({ title, image, description, price, id }) => (
+            <Card
+              title={title}
+              image={image}
+              desc={description}
+              price={price}
+              key={id}
+            />
+          ))}
+        </div>
+       
           <p>loading</p>
-        )}
       </div>
-    </div>
+
   );
 }
 
