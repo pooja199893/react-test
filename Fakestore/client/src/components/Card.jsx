@@ -1,5 +1,8 @@
 
 import React from "react";
+
+
+
 // import "App.css";
 
 function Card({ title, image, desc, price }) {

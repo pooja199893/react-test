@@ -62,17 +62,7 @@ input::placeholder {
   color: green;
 }
 
-/* .cart-btn {
-  width: 100%;
-  padding: 1.5rem;
-  border: none;
-  background-color: green;
-  color: var(--white);
-  font-size: 1.6rem;
-  cursor: pointer;
-  border-radius: 2rem;
-  transition: all 0.3s ease-out;
-} */
+
 
 .cart-btn:hover {
   opacity: 0.9;
