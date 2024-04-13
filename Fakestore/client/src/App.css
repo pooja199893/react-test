@@ -1,0 +1,52 @@
+
+.search-app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #181515;
+  border-radius: 12px;
+}
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 20px;
+}
+
+.product {
+  border: 1px solid #7a6363;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.product img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.product h3 {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.product p {
+  margin: 10px 0;
+}
+
+.no-results {
+  text-align: center;
+  font-style: italic;
+  color: #999;
+}
